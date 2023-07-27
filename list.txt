@@ -1,3 +1,20 @@
+server .env 
+POSTGRES_DIALECT=postgres
+POSTGRES_LOGGING=true
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=root
+POSTGRES_DB=petrova
+CLIENT_URL=http://localhost:3000
+
+
+client  .env
+NEXT_PUBLIC_API_BASEURL=http://localhost:5000
+
+
+
+
 
 sudo su - postgres
 createdb m_p -O postgres
