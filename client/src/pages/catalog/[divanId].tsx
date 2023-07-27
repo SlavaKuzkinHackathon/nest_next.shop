@@ -29,12 +29,13 @@ function DivanPage({ query }: { query: IQueryParams }) {
 
   return (
     <>
-      {/*  <SEO
-        title="Каталог | МЯГКАЯ МЕБЕЛЬ ОТ ПРОИЗВОДИТЕЛЯ Ваша Мебель"
+       <SEO
+       title={`ВАША МЕБЕЛЬ | ${divan.name}`}
+        /* title="Каталог | МЯГКАЯ МЕБЕЛЬ ОТ ПРОИЗВОДИТЕЛЯ Ваша Мебель" */
         description="Интернет-магазин диванов в городе Новосибирске Ваша Мебель"
         keywords="недорогие диваны от производителя"
-      /> */}
-      <SEO {...shippingConfig} />
+      />
+      {/* <SEO {...shippingConfig} /> */}
 
       {/* <CatalogPage query={query} /> */}
       <h1>{divan.name}</h1>

@@ -51,7 +51,7 @@ https://github.com/TeemPresents/shop-ytb-client
 
 
 
-30 .50
+37.25
 
 todo: switchForm(register to auth)
 todo: footer
