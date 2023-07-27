@@ -1,0 +1,41 @@
+
+sudo su - postgres
+createdb m_p -O postgres
+sudo su - postgres
+psql petrova
+
+psql m_p
+\petrova - таблицы в базе данных
+dropdb m_p 
+
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+-удаление данных, и создание схемы в БД
+select * from "Users";
+select * from "Divans";
+
+1-npx sequelize-cli db:migrate
+2-npm run start:dev
+3-npx sequelize-cli db:seed:all
+
+
+	
+DELETE FROM users;
+
+
+
+UPDATE имя_таблицы
+SET столбец1 = значение1, столбец2 = значение2, ... столбецN = значениеN
+[WHERE условие_обновления]
+
+
+https://github.com/abkiselev/ecom
+https://github.com/TeemPresents/shop-ytb-client
+
+
+
+30 .50
+
+todo: switchForm(register to auth)
+todo: footer
+todo: SEO !!!
