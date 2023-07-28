@@ -37,7 +37,7 @@ function DivanPage({ query }: { query: IQueryParams }) {
       />
       {/* <SEO {...shippingConfig} /> */}
 
-      {/* <CatalogPage query={query} /> */}
+       {/* <DivanPage query={query} /> */}
       <h1>{divan.name}</h1>
     </>
   )
