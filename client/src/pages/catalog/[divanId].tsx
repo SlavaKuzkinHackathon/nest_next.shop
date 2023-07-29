@@ -8,8 +8,9 @@ import { getDivanFx } from "../../../app/api/divans"
 import { toast } from "react-toastify"
 import { setDivans } from "../../../context/divans"
 import { useEffect } from "react"
+import DivanPage from "../../../components/templates/DivanPage/DivanPage"
 
-function DivanPage({ query }: { query: IQueryParams }) {
+function CatalogDivanPage({ query }: { query: IQueryParams }) {
 
   const divan = useStore($divan)
 
@@ -38,7 +39,7 @@ function DivanPage({ query }: { query: IQueryParams }) {
       {/* <SEO {...shippingConfig} /> */}
 
        {/* <DivanPage query={query} /> */}
-      <h1>{divan.name}</h1>
+       <DivanPage />
     </>
   )
 }
@@ -49,4 +50,4 @@ export async function getServerSideProps(context: { query: IQueryParams }) {
   }
 }
 
-export default DivanPage
+export default CatalogDivanPage
