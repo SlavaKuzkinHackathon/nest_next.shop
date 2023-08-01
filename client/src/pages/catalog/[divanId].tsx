@@ -1,6 +1,4 @@
 import SEO from "../../../components/SEO"
-import { shippingConfig } from "@/utils/config"
-import CatalogPage from "../../../components/templates/CatalogPage/CatalogPage"
 import { IQueryParams } from "../../../types/catalog"
 import { useStore } from "effector-react"
 import { $divan, setDivan } from "../../../context/divan"

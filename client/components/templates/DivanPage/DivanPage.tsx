@@ -1,7 +1,5 @@
 import { useStore } from 'effector-react'
 import { $divan } from '../../../context/divan'
-import styles from '../../../src/styles/divan/index.module.scss'
-import spinnerStyles from '../../../src/styles/spinner/spinner.module.css'
 import DivanImagesList from '../../modules/DivanPage/DivanImagesList'
 import { formatPrice } from '@/utils/common'
 import { $shopingCart } from '../../../context/shopping-cart'
@@ -16,7 +14,9 @@ import DashboardSlider from '../../modules/DashboardPage/DashboardSlider'
 import { toast } from 'react-toastify'
 import { getDivansFx } from '../../../app/api/divans'
 import { $divans, setDivans, setDivansByPopularity } from '../../../context/divans'
-
+import DivanAccordion from '../../modules/DivanPage/DivanAccordion'
+import styles from '../../../src/styles/divan/index.module.scss'
+import spinnerStyles from '../../../src/styles/spinner/spinner.module.css'
 
 const DivanPage = () => {
 
@@ -55,7 +55,7 @@ const DivanPage = () => {
         <section>
             <div className="container">
                 <div className={styles.divan__top}>
-                    <h2>{divan.name}</h2>
+                    <h2 className={styles.divan__title}>{divan.name}</h2>
                     <div className={styles.divan__inner}>
                         <DivanImagesList />
                         <div className={styles.divan__info}>
@@ -106,13 +106,33 @@ const DivanPage = () => {
                 {isMobile && (
                     <div className={styles.divan__accordion}>
                         <div className={styles.divan__accordion__inner}>
-                            
+                            <DivanAccordion
+                                title='Описание'
+                            >
+                                <div className={styles.divan__accordion__content}>
+                                    <h3 className={styles.divan__tabs__content__title}>
+                                        {divan.name}
+                                    </h3>
+                                </div>
+                                <p className={styles.divan__tabs__content__text}>
+                                    {divan.description}
+                                </p>
+                            </DivanAccordion>
                         </div>
+                        <DivanAccordion
+                            title='Совместимость'
+                        >
+                            <div className={styles.divan__accordion__content}>
+                            </div>
+                            <p className={styles.divan__tabs__content__text}>
+                                {divan.popularity}
+                            </p>
+                        </DivanAccordion>
                     </div>
                 )}
                 <div className={styles.divan__bottom}>
                     <h2 className={styles.divan__title}>
-                        Вам понравиться
+                        Вам понравится
                     </h2>
                     <DashboardSlider
                         goToPathPage
