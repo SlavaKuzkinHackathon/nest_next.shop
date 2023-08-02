@@ -26,6 +26,14 @@ const DashboardPage = () => {
         loadDivans()
     }, [])
 
+    useEffect(() => {
+        if(shopingCart.length){
+            setShowAlert(true)
+            return
+        }
+        setShowAlert(false)
+    }, [shopingCart.length])
+
     const loadDivans = async () => {
         try {
             setSpinner(true)
