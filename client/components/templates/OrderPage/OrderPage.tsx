@@ -6,14 +6,31 @@ import OrderAccordion from '../../modules/OrderPage/OrderAccordion'
 import { useState } from 'react'
 import styles from '../../../src/styles/order/index.module.scss'
 import spinnerStyles from '../../../src/styles/spinner/spinner.module.css'
+import { makePaymentFx } from '../../../app/api/payment'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
 
 const OrderPage = () => {
     const shopingCart = useStore($shopingCart)
     const totalPrice = useStore($totalPrice)
     const [orderIsReady, setOrderIsReady] = useState(false)
     const [agreement, setAgreement] = useState(false)
+    const spinner = useStore(makePaymentFx.pending)
+    const router = useRouter()
 
     const handleAgreementChange = () => setAgreement(!agreement)
+    const makePay = async () => {
+        try {
+            const data = await makePaymentFx({
+                url: '/payment',
+                amount: `${totalPrice}`
+            })
+
+            router.push(data.confirmation.confirmation_url)
+        } catch (error) {
+            toast.error((error as Error).message)
+        }
+    }
 
     return (
         <section className={styles.order}>
@@ -46,9 +63,9 @@ const OrderPage = () => {
                             <button
                                 disabled={!(orderIsReady && agreement)}
                                 className={styles.order__pay__btn}
-                                /* onClick={makePay} */
+                            /* onClick={makePay} */
                             >
-                               {/*  {spinner ? (
+                                {/*  {spinner ? (
                                     <span
                                         className={spinnerStyles.spinner}
                                         style={{ top: '6px', left: '47%' }}
