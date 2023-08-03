@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { useState } from "react"
 import { IDivan } from "../../../types/divans"
 import Link from "next/link"
 import { formatPrice } from "@/utils/common"
@@ -8,18 +7,19 @@ import { useStore } from "effector-react"
 import { $shopingCart } from "../../../context/shopping-cart"
 import CartHoverCheckedSvg from "../../Elements/CartHoverCheckedSvg/CartHoverCheckedSvg"
 import CartHoverSvg from "../../Elements/CartHoverSvg/CartHoverSvg"
-import spinnerStyles from '../../../src/styles/spinner/spinner.module.css'
-import styles from '../../../src/styles/catalog/index.module.scss'
 import { toggleCartItem } from "@/utils/shoping-cart"
 import { $user } from "../../../context/user"
+import { RemoveFromCartFx } from "../../../app/api/shoping-cart"
+import spinnerStyles from '../../../src/styles/spinner/spinner.module.css'
+import styles from '../../../src/styles/catalog/index.module.scss'
 
 const CatalogItem = ({ item }: { item: IDivan }) => {
     const shopingCart = useStore($shopingCart)
     const user = useStore($user)
     const isInCart = shopingCart.some((cartItem) => cartItem.divansId === item.id)
-    const [spinner, setSpinner] = useState(false)
+    const spinner = useStore(RemoveFromCartFx.pending)
 
-    const toggleToCart = () => toggleCartItem(user.username, item.id, isInCart, setSpinner)
+    const toggleToCart = () => toggleCartItem(user.username, item.id, isInCart)
 
     return (
         <li className={styles.catalog__list__item}>

@@ -1,32 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-import { IShopingCartItem } from "../../../types/shoping-cart"
 import Link from "next/link"
+import { IShopingCartItem } from "../../../types/shoping-cart"  
 import DeleteSvg from "../../Elements/DeleteSvg/DeleteSvg"
-import { useEffect, useState } from "react"
 import { formatPrice } from "@/utils/common"
-import { removeItemFromCart, updateTotalPrice } from "@/utils/shoping-cart"
 import CartItemCounter from "../../Elements/CartItemCounter/CartItemCounter"
-import styles from '../../../src/styles/cartPopup/index.module.css'
+import { usePrice } from "../../../hooks/usePrice"
 import spinnerStyles from '../../../src/styles/spinner/spinner.module.css'
+import styles from '../../../src/styles/cartPopup/index.module.css'
 
 
 const CartPopupItem = ({ item }: { item: IShopingCartItem }) => {
-
-    const [spinner, setSpinner] = useState(false)
-    const [price, setPrice] = useState(item.price)
-
-    useEffect(() => {
-        setPrice(price * item.count)
-    }, [])
-
-    useEffect(() => {
-        updateTotalPrice(price, item.divansId)
-    }, [price])
-
-    const increasePrice = () => setPrice(price + item.price)
-    const decreasePrice = () => setPrice(price - item.price)
-
-    const deleteCartItem = () => removeItemFromCart(item.divansId, setSpinner)
+ 
+    const { price, spinner, decreasePrice, deleteCartItem, increasePrice } =
+    usePrice(item.count, item.divansId, item.price)
 
     return (
         <li className={styles.cart__popup__list__item}>

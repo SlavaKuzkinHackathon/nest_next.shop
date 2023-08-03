@@ -3,7 +3,7 @@ import { $divan } from '../../../context/divan'
 import DivanImagesList from '../../modules/DivanPage/DivanImagesList'
 import { formatPrice } from '@/utils/common'
 import { $shopingCart } from '../../../context/shopping-cart'
-import { useEffect, useState } from 'react'
+import { useEffect} from 'react'
 import CartHoverCheckedSvg from '../../Elements/CartHoverCheckedSvg/CartHoverCheckedSvg'
 import CartHoverSvg from '../../Elements/CartHoverSvg/CartHoverSvg'
 import { toggleCartItem } from '@/utils/shoping-cart'
@@ -15,6 +15,7 @@ import { toast } from 'react-toastify'
 import { getDivansFx } from '../../../app/api/divans'
 import { $divans, setDivans, setDivansByPopularity } from '../../../context/divans'
 import DivanAccordion from '../../modules/DivanPage/DivanAccordion'
+import { RemoveFromCartFx } from '../../../app/api/shoping-cart'
 import styles from '../../../src/styles/divan/index.module.scss'
 import spinnerStyles from '../../../src/styles/spinner/spinner.module.css'
 
@@ -26,8 +27,8 @@ const DivanPage = () => {
     const isMobile = useMediaQuery(850)
     const user = useStore($user)
     const isInCart = cartItems.some((item) => item.divansId === divan.id)
-    const [spinnerToggleCart, setSpinnerToggleCart] = useState(false)
-    const [spinnerSlider, setSpinnerSlider] = useState(false)
+    const spinnerToggleCart= useStore(RemoveFromCartFx.pending)
+    const spinnerSlider = useStore(getDivansFx.pending)
 
     useEffect(() => {
         loadDivan()
@@ -35,21 +36,17 @@ const DivanPage = () => {
 
     const loadDivan = async () => {
         try {
-            setSpinnerSlider(true)
             const data = await getDivansFx('/divans?limit=20&offset=0')
             setDivans(data)
             setDivansByPopularity()
         } catch (error) {
             toast.error((error as Error).message)
-        } finally {
-            setTimeout(() => setSpinnerSlider(false), 1500)
-
         }
 
     }
 
     const toggleToCart = () =>
-        toggleCartItem(user.username, divan.id, isInCart, setSpinnerToggleCart)
+        toggleCartItem(user.username, divan.id, isInCart)
 
     return (
         <section>

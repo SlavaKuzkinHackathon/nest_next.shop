@@ -20,14 +20,14 @@ const DashboardPage = () => {
     const [spinner, setSpinner] = useState(false)
 
     const shopingCart = useStore($shopingCart)
-    const [showAlert, setShowAlert] = useState(!! shopingCart.length)
+    const [showAlert, setShowAlert] = useState(!!shopingCart.length)
 
     useEffect(() => {
         loadDivans()
     }, [])
 
     useEffect(() => {
-        if(shopingCart.length){
+        if (shopingCart.length) {
             setShowAlert(true)
             return
         }
@@ -61,18 +61,21 @@ const DashboardPage = () => {
         }
     }
 
-    const closeAlert = () => {setShowAlert(false)}
+    const closeAlert = () => { setShowAlert(false) }
 
     return (
         <section className={styles.dashboard}>
             <div className={`container ${styles.dashboard__container}`}>
                 <AnimatePresence>
                     {showAlert && <motion.div
-                    initial={{opacity: 0}}
-                    animate= {{opacity: 1}}
-                    exit={{opacity: 0}}
-                    className={styles.dashboard__alert}
-                    ><CartAlert count={shopingCart.length} closeAlert={closeAlert}/></motion.div>}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className={styles.dashboard__alert}
+                    ><CartAlert count={shopingCart.reduce(
+                        (defaultCount, item) => defaultCount + item.count, 0)
+                    }
+                        closeAlert={closeAlert} /></motion.div>}
                 </AnimatePresence>
                 <div className={styles.dashboard__divansPhSlide__slider}>
                     <DivansSlider />
