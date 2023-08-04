@@ -1,6 +1,6 @@
 import { forwardRef, useEffect } from "react";
 import ShoppingCartSvg from "../../Elements/ShopingCartSvg/ShopingCartSvg";
-import { $shopingCart, $totalPrice, setShopingCart, setTotalPrice } from "../../../context/shopping-cart";
+import { $disableCart, $shopingCart, $totalPrice, setShopingCart, setTotalPrice } from "../../../context/shopping-cart";
 import { useStore } from "effector-react";
 import Link from "next/link";
 import { IWrappedComponentProps } from "../../../types/common"
@@ -17,6 +17,7 @@ const CartPopup = forwardRef<HTMLDivElement, IWrappedComponentProps>(
   ({ open, setOpen }, ref) => {
 
     const shopingCart = useStore($shopingCart)
+    const disableCart = useStore($disableCart)
     const user = useStore($user)
     const totalPrice = useStore($totalPrice)
     const toggleCartDropDown = () => setOpen(!open)
@@ -45,12 +46,25 @@ const CartPopup = forwardRef<HTMLDivElement, IWrappedComponentProps>(
 
     return (
       <div className={styles.cart} ref={ref} >
-        <button className={styles.cart__btn} onClick={toggleCartDropDown}>
-          {!!shopingCart.length &&
-            <span className={styles.cart__btn__count}>{shopingCart.length}</span>}
-          <span className={styles.cart__svg}><ShoppingCartSvg /></span>
-
-        </button>
+        {disableCart ? (<button className={styles.cart__btn}
+          style={{ cursor: "auto" }}
+        >
+          <span className={styles.cart__svg}>
+            <ShoppingCartSvg /></span>
+        </button>) :
+          (
+            <button
+              className={styles.cart__btn}
+              onClick={toggleCartDropDown}>
+              {!!shopingCart.length &&
+                <span className={styles.cart__btn__count}>
+                  {shopingCart.length}
+                </span>}
+              <span className={styles.cart__svg}>
+                <ShoppingCartSvg />
+              </span>
+            </button>
+          )}
         <AnimatePresence>
           {open && <motion.ul
             initial={{ opacity: 0, scale: 0 }}

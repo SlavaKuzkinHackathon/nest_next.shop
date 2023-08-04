@@ -1,18 +1,28 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './header.module.css'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import CartPopup from './CartPopup/CartPopup'
 import { IWrappedComponentProps } from '../../types/common'
 import { withClickOutside } from '@/utils/withClickOutside'
 import GamburgerSvg from '../Elements/GamburgerSvg/GamburgerSvg'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useRouter } from 'next/router'
+import { setDisableCart } from '../../context/shopping-cart'
 
 const HeaderBottom = forwardRef<HTMLDivElement, IWrappedComponentProps>(
     ({ open, setOpen }, ref) => {
         const [isMenuChecked, setIsMenuChecked] = useState(false);
         const toggleNavBarDropDown = () => setOpen(!open)
+        const router = useRouter()
 
+        useEffect(() => {
+            if(router.pathname === '/order'){
+                setDisableCart(true)
+                return
+            }
+            setDisableCart(false)
+        },[router.pathname])
 
         return (
 
