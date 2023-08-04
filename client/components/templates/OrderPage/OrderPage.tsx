@@ -1,14 +1,15 @@
 import { useStore } from 'effector-react'
-
-import { $shopingCart, $totalPrice } from '../../../context/shopping-cart'
+import { $shopingCart, $totalPrice, setShopingCart } from '../../../context/shopping-cart'
 import { formatPrice } from '@/utils/common'
 import OrderAccordion from '../../modules/OrderPage/OrderAccordion'
 import { useState } from 'react'
-import styles from '../../../src/styles/order/index.module.scss'
-import spinnerStyles from '../../../src/styles/spinner/spinner.module.css'
 import { makePaymentFx } from '../../../app/api/payment'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
+import { RemoveFromCartFx } from '../../../app/api/shoping-cart'
+import { $user } from '../../../context/user'
+import styles from '../../../src/styles/order/index.module.scss'
+import spinnerStyles from '../../../src/styles/spinner/spinner.module.css'
 
 const OrderPage = () => {
     const shopingCart = useStore($shopingCart)
@@ -17,16 +18,20 @@ const OrderPage = () => {
     const [agreement, setAgreement] = useState(false)
     const spinner = useStore(makePaymentFx.pending)
     const router = useRouter()
+    const user = useStore($user)
 
     const handleAgreementChange = () => setAgreement(!agreement)
     const makePay = async () => {
         try {
             const data = await makePaymentFx({
                 url: '/payment',
-                amount: `${totalPrice}`
+                amount: totalPrice
             })
 
             router.push(data.confirmation.confirmation_url)
+
+            await RemoveFromCartFx(`/cart/all${user.userId}`)
+            setShopingCart([])
         } catch (error) {
             toast.error((error as Error).message)
         }
@@ -63,16 +68,16 @@ const OrderPage = () => {
                             <button
                                 disabled={!(orderIsReady && agreement)}
                                 className={styles.order__pay__btn}
-                            /* onClick={makePay} */
+                                onClick={makePay}
                             >
-                                {/*  {spinner ? (
+                                {spinner ? (
                                     <span
                                         className={spinnerStyles.spinner}
                                         style={{ top: '6px', left: '47%' }}
                                     />
                                 ) : (
-                                    ' */}Подтвердить заказ{/* '
-                                )} */}
+                                    'Подтвердить заказ'
+                                )}
                             </button>
                             <label
                                 className={styles.order__pay__rights}
