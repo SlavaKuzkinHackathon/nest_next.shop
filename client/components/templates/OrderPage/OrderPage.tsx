@@ -2,8 +2,8 @@ import { useStore } from 'effector-react'
 import { $shopingCart, $totalPrice, setShopingCart } from '../../../context/shopping-cart'
 import { formatPrice } from '@/utils/common'
 import OrderAccordion from '../../modules/OrderPage/OrderAccordion'
-import { useState } from 'react'
-import { makePaymentFx } from '../../../app/api/payment'
+import { useEffect, useState } from 'react'
+import { checkPaymentFx, makePaymentFx } from '../../../app/api/payment'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import { RemoveFromCartFx } from '../../../app/api/shoping-cart'
@@ -21,20 +21,52 @@ const OrderPage = () => {
     const user = useStore($user)
 
     const handleAgreementChange = () => setAgreement(!agreement)
+
+    useEffect(() => {
+        const paymentId = sessionStorage.getItem('paymentId')
+
+        if (paymentId) {
+            checkPayment(paymentId)
+        }
+
+    }, [])
+
     const makePay = async () => {
         try {
             const data = await makePaymentFx({
                 url: '/payment',
                 amount: totalPrice
             })
+            sessionStorage.setItem('paymentId', data.id)
 
             router.push(data.confirmation.confirmation_url)
-
-            await RemoveFromCartFx(`/cart/all${user.userId}`)
-            setShopingCart([])
         } catch (error) {
             toast.error((error as Error).message)
         }
+    }
+
+    const checkPayment = async (paymentId: string) => {
+        try {
+            const data = await checkPaymentFx({
+                url: '/payment/info',
+                paymentId
+            })
+
+            if (data.status === 'succeeded') {
+                resetCart()
+                return
+            }
+
+        } catch (error) {
+            console.log((error as Error).message)
+            resetCart()
+        }
+    }
+
+    const resetCart = async () => {
+        sessionStorage.removeItem('paymentId')
+        await RemoveFromCartFx(`/cart/all${user.userId}`)
+        setShopingCart([])
     }
 
     return (

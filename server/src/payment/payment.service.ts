@@ -1,6 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { MakePaymentDto } from './dto/make-payment.dto';
+import {CheckPaymentDto} from './dto/check-payment.dto'
 
 @Injectable()
 export class PaymentService {
@@ -28,6 +29,22 @@ export class PaymentService {
             return_url: 'http://localhost:3000/order',
           },
           description: 'Заказ №1',
+        },
+      });
+
+      return data;
+    } catch (error) {
+      throw new ForbiddenException(error);
+    }
+  }
+  async checkPayment(checkPaymentDto: CheckPaymentDto) {
+    try {
+      const { data } = await axios({
+        method: 'GET',
+        url: `https://api.yookassa.ru/v3/payments/${checkPaymentDto.paymentId}`,
+        auth: {
+          username: '216151',
+          password: 'test_W0lATiuNvG9z7w_deOlsjHP37FiOuY0w5SjNNGbE-s8',
         },
       });
 
