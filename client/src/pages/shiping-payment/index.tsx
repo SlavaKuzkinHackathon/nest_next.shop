@@ -1,5 +1,4 @@
 import SEO from "../../../components/SEO"
-import OrderPage from "../../../components/templates/OrderPage/OrderPage"
 import ShipingPayment from "../../../components/templates/ShipingPayment/ShipingPayment"
 
 function ShipingPaymentPage() {
