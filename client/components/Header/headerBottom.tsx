@@ -41,7 +41,7 @@ const HeaderBottom = forwardRef<HTMLDivElement, IWrappedComponentProps>(
                                 <Link href={'/catalog'}>Каталог</Link>
                             </li>
                             <li onClick={() => setIsMenuChecked(false)} className={`${styles.link} link`}>
-                                <Link href={''}>Тахта</Link>
+                                <Link href={'/shiping-payment'}>Доставка и оплата</Link>
                             </li>
                             <li onClick={() => setIsMenuChecked(false)} className={`${styles.link} link`}>
                                 <Link href='/contacts'>Контакты</Link>
@@ -90,7 +90,7 @@ const HeaderBottom = forwardRef<HTMLDivElement, IWrappedComponentProps>(
                                 <Link href={'/catalog'}>Каталог</Link>
                             </li>
                             <li onClick={toggleNavBarDropDown} className={`${styles.link} link`}>
-                                <Link href={''}>Тахта</Link>
+                                <Link href={'/shiping-payment'}>Доставка и оплата</Link>
                             </li>
                             <li onClick={toggleNavBarDropDown} className={`${styles.link} link`}>
                                 <Link href='/contacts'>Контакты</Link>

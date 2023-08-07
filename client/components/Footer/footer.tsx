@@ -16,15 +16,14 @@ const Footer = () => {
 
         <div className={styles.column}>
           <h3 className={styles.column_head}>КАТЕГОРИИ</h3>
-          <Link href={'/divan'} className="link">Диваны</Link>
-          <Link href={''} className="link">Кресла</Link>
-          <Link href={''} className="link">Тахта</Link>
+          <Link href={'/'} className="link">Главная</Link>
+          <Link href={'/catalog'} className="link">Каталог</Link>
           <Link href={''} className="link">Изготовление на заказ</Link>
         </div>
 
         <div className={styles.column}>
           <h3 className={styles.column_head}>СЕРВИС</h3>
-          <Link href={''} className="link">Доставка и оплата</Link>
+          <Link className="link" href={'/shiping-payment'}>Доставка и оплата</Link>
           <Link href='/about' className="link">О нас</Link>
         </div>
 

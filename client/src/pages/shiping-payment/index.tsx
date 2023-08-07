@@ -1,5 +1,6 @@
 import SEO from "../../../components/SEO"
 import OrderPage from "../../../components/templates/OrderPage/OrderPage"
+import ShipingPayment from "../../../components/templates/ShipingPayment/ShipingPayment"
 
 function ShipingPaymentPage() {
 
@@ -11,7 +12,7 @@ function ShipingPaymentPage() {
                 keywords="недорогие диваны от производителя"
             />
             {/* <SEO {...homeConfig} />  */}
-            <h1>Доставка</h1>
+            <ShipingPayment />
         </>
     )
 }
