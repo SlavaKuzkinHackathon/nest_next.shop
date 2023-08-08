@@ -1,9 +1,19 @@
-import  Router  from "next/router";
+import Router from "next/router";
+import SEO from "../../../components/SEO";
+import ContactsPage from "../../../components/templates/ContactsPage/ContactsPage";
 
-export default function ContactsPage() {
+ function Contacts() {
     return (
         <>
-            <div>
+            <SEO
+                title="Контакты | МЯГКАЯ МЕБЕЛЬ ОТ ПРОИЗВОДИТЕЛЯ Ваша Мебель"
+                description="Интернет-магазин диванов в городе Новосибирске Ваша Мебель"
+                keywords="недорогие диваны от производителя"
+            />
+            {/* <SEO {...homeConfig} />  */}
+            <ContactsPage />
+
+            {/* <div>
                 <ul>
                     <li >
                         <p >Телефон:</p>
@@ -27,7 +37,8 @@ export default function ContactsPage() {
                     </li>
                 </ul>
             </div>
-            <div><button onClick={() => Router.push('/')}>На главную</button></div>
+            <div><button onClick={() => Router.push('/')}>На главную</button></div> */}
         </>
     )
 }
+export default Contacts

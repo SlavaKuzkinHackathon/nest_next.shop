@@ -10,7 +10,7 @@ const HeaderTop = () => {
       <div className={`container ${styles.header__top__container}`}>
         <CityButton />
         <div className={styles.phone}>
-          <Link href="tel:+7 913 913 55 47" >+79139135547</Link>
+          <Link href="tel:+7 913 913 1111" >+79139131111</Link>
         </div>
         <ProfileDropdown />
       </div>

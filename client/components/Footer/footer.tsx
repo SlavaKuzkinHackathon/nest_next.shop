@@ -29,7 +29,7 @@ const Footer = () => {
 
         <div className={styles.column}>
           <h3 className={styles.column_head}>КОНТАКТЫ</h3>
-          <Link href="tel:+79139135547" className="link">+7(913) 913-55-47</Link>
+          <Link href="tel:+79139135547" className="link">+7(913) 913-11-11</Link>
           <Link href="/contacts" className="link">Адреса салонов</Link>
           <Link href="mailto:mebel-petrova@mail.ru" className="link">Написать нам</Link>
 
