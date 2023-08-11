@@ -22,3 +22,8 @@ export interface IOption {
     boxShadowStyle?: string
     callback?: (arg0: boolean) => void
   }
+
+  export interface IGeolacation {
+    latitude: number
+    longitude: number
+  }

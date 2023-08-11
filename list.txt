@@ -11,6 +11,7 @@ CLIENT_URL=http://localhost:3000
 
 client  .env
 NEXT_PUBLIC_API_BASEURL=http://localhost:5000
+NEXT_PUBLIC_GEPAPI_KEY=05c4b1649f9b41a79ce8257e2d1aacdb
 
 
 
@@ -51,7 +52,7 @@ https://github.com/TeemPresents/shop-ytb-client
 
 
 
-1.59.15
+2.34.39
 
 todo: switchForm(register to auth)
 todo: footer
