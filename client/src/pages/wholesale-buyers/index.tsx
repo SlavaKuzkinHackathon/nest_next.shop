@@ -1,7 +1,7 @@
 import SEO from "../../../components/SEO";
 import ContactsPage from "../../../components/templates/ContactsPage/ContactsPage";
 
- function Contacts() {
+function WholesaleBuyers() {
     return (
         <>
             <SEO
@@ -10,8 +10,13 @@ import ContactsPage from "../../../components/templates/ContactsPage/ContactsPag
                 keywords="недорогие диваны от производителя"
             />
             {/* <SEO {...homeConfig} />  */}
-            <ContactsPage />
+            {/* <Breadcrumbs
+                getDefaultTextGenerator={getDefaultTextGenerator}
+                getTextGenerator={getTextGenerator}
+            /> */}
+            <ContactsPage isWholesaleBuyersPage={true} />
+            <div className="overlay" />
         </>
     )
 }
-export default Contacts
+export default WholesaleBuyers

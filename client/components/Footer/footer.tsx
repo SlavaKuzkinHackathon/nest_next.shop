@@ -24,6 +24,7 @@ const Footer = () => {
         <div className={styles.column}>
           <h3 className={styles.column_head}>СЕРВИС</h3>
           <Link className="link" href={'/shiping-payment'}>Доставка и оплата</Link>
+          <Link className="link" href={'/wholesale-buyers'}>Оптовым покупателям</Link>
           <Link href='/about' className="link">О нас</Link>
         </div>
 
