@@ -7,13 +7,14 @@ import { checkPaymentFx, makePaymentFx } from '../../../app/api/payment'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import { RemoveFromCartFx } from '../../../app/api/shoping-cart'
-import { $user } from '../../../context/user'
+import { $user, $userCity } from '../../../context/user'
 import styles from '../../../src/styles/order/index.module.scss'
 import spinnerStyles from '../../../src/styles/spinner/spinner.module.css'
 
 const OrderPage = () => {
     const shopingCart = useStore($shopingCart)
     const totalPrice = useStore($totalPrice)
+    const userCity = useStore($userCity)
     const [orderIsReady, setOrderIsReady] = useState(false)
     const [agreement, setAgreement] = useState(false)
     const spinner = useStore(makePaymentFx.pending)
@@ -22,20 +23,32 @@ const OrderPage = () => {
 
     const handleAgreementChange = () => setAgreement(!agreement)
 
+    /*     useEffect(() => {
+            const paymentId = sessionStorage.getItem('paymentId')
+    
+            if (paymentId) {
+                checkPayment(paymentId)
+            }
+    
+        }, []) */
+
     useEffect(() => {
         const paymentId = sessionStorage.getItem('paymentId')
 
         if (paymentId) {
             checkPayment(paymentId)
         }
-
     }, [])
 
     const makePay = async () => {
         try {
             const data = await makePaymentFx({
                 url: '/payment',
-                amount: totalPrice
+                amount: totalPrice,
+                description: `Заказ №1 ${userCity.city.length
+                        ? `Город: ${userCity.city}, улица: ${userCity.street}`
+                        : ''
+                    }`,
             })
             sessionStorage.setItem('paymentId', data.id)
 
@@ -49,7 +62,7 @@ const OrderPage = () => {
         try {
             const data = await checkPaymentFx({
                 url: '/payment/info',
-                paymentId
+                paymentId,
             })
 
             if (data.status === 'succeeded') {
@@ -57,6 +70,7 @@ const OrderPage = () => {
                 return
             }
 
+            sessionStorage.removeItem('paymentId')
         } catch (error) {
             console.log((error as Error).message)
             resetCart()
@@ -68,6 +82,8 @@ const OrderPage = () => {
         await RemoveFromCartFx(`/cart/all${user.userId}`)
         setShopingCart([])
     }
+
+    
 
     return (
         <section className={styles.order}>

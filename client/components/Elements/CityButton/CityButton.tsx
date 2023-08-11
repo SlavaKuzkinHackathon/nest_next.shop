@@ -1,6 +1,6 @@
 import LocationSvg from "../LocationSvg/LocationSvg"
 import { useStore } from "effector-react"
-import { $userCity } from "../../../context/user"
+import { $userCity, setUserCity } from "../../../context/user"
 import { getGeolacationFx } from "../../../app/api/geolocation"
 import { toast } from "react-toastify"
 import spinnerStyles from '../../../src/styles/spinner/spinner.module.css'
@@ -9,7 +9,7 @@ import styles from '../../../src/styles/cityButton/index.module.css'
 
 const cityButtom = () => {
 
-    const city = useStore($userCity)
+    const { city } = useStore($userCity)
     const spinner = useStore(getGeolacationFx.pending)
 
     const getCity = () => {
@@ -25,7 +25,10 @@ const cityButtom = () => {
 
                 const { data } = await getGeolacationFx({ latitude, longitude })
 
-                console.log(data)
+                setUserCity({
+                    city: data.features[0].properties.city,
+                    street: data.features[0].properties.address_line1,
+                })
 
             } catch (error) {
                 toast.error((error as Error).message)
