@@ -1,7 +1,11 @@
+import { useCallback } from "react"
 import SEO from "../../../components/SEO"
 import ShipingPayment from "../../../components/templates/ShipingPayment/ShipingPayment"
+import Breadcrumbs from "../../../components/modules/Breadcrumbs/Breadcrumbs"
 
 function ShipingPaymentPage() {
+    const getDefaultTextGenerator = useCallback(() => 'Доставка и оплата', [])
+    const getTextGenerator = useCallback((param: string) => ({}[param]), [])
 
     return (
         <>
@@ -11,7 +15,14 @@ function ShipingPaymentPage() {
                 keywords="недорогие диваны от производителя"
             />
             {/* <SEO {...homeConfig} />  */}
+
+            <Breadcrumbs
+                getDefaultTextGenerator={getDefaultTextGenerator}
+                getTextGenerator={getTextGenerator}
+            />
+
             <ShipingPayment />
+            <div className="overlay" />
         </>
     )
 }

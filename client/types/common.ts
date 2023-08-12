@@ -27,3 +27,11 @@ export interface IOption {
     latitude: number
     longitude: number
   }
+
+
+export interface ICrumbProps {
+  text: string
+  textGenerator: () => string
+  href: string
+  last: boolean
+}

@@ -1,7 +1,11 @@
+import { useCallback } from "react";
 import SEO from "../../../components/SEO";
 import ContactsPage from "../../../components/templates/ContactsPage/ContactsPage";
+import Breadcrumbs from "../../../components/modules/Breadcrumbs/Breadcrumbs";
 
 function WholesaleBuyers() {
+    const getDefaultTextGenerator = useCallback(() => 'Оптовым покупателям', [])
+    const getTextGenerator = useCallback((param: string) => ({}[param]), [])
     return (
         <>
             <SEO
@@ -10,10 +14,10 @@ function WholesaleBuyers() {
                 keywords="недорогие диваны от производителя"
             />
             {/* <SEO {...homeConfig} />  */}
-            {/* <Breadcrumbs
+            <Breadcrumbs
                 getDefaultTextGenerator={getDefaultTextGenerator}
                 getTextGenerator={getTextGenerator}
-            /> */}
+            />
             <ContactsPage isWholesaleBuyersPage={true} />
             <div className="overlay" />
         </>

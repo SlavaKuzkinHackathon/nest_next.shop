@@ -5,10 +5,11 @@ import { $divan, setDivan } from "../../../context/divan"
 import { getDivanFx } from "../../../app/api/divans"
 import { toast } from "react-toastify"
 import { setDivans } from "../../../context/divans"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import DivanPage from "../../../components/templates/DivanPage/DivanPage"
 import { useRouter } from "next/router"
 import Custom404 from "../404"
+import Breadcrumbs from "../../../components/modules/Breadcrumbs/Breadcrumbs"
 
 function CatalogDivanPage({ query }: { query: IQueryParams }) {
 
@@ -19,6 +20,21 @@ function CatalogDivanPage({ query }: { query: IQueryParams }) {
   useEffect(() => {
     loadDivan()
   }, [router.asPath])
+
+
+
+  const getDefaultTextGenerator = useCallback(
+    (subpath: string) => subpath.replace('catalog', 'Каталог'),
+    []
+  )
+  const getTextGenerator = useCallback((param: string) => ({}[param]), [])
+  const lastCrumb = document.querySelector('.last-crumb') as HTMLElement
+
+  useEffect(() => {
+    if (lastCrumb) {
+      lastCrumb.textContent = divan.name
+    }
+  }, [lastCrumb, divan])
 
   const loadDivan = async () => {
     try {
@@ -46,9 +62,15 @@ function CatalogDivanPage({ query }: { query: IQueryParams }) {
       {/* <SEO {...shippingConfig} /> */}
 
       {/* <DivanPage query={query} /> */}
+
+      <Breadcrumbs
+        getDefaultTextGenerator={getDefaultTextGenerator}
+        getTextGenerator={getTextGenerator}
+      />
       {error ? (
         <Custom404 />
       ) : (<DivanPage />)}
+      <div className="overlay" />
 
     </>
   )

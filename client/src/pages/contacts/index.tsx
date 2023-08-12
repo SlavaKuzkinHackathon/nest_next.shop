@@ -1,7 +1,12 @@
+import { useCallback } from "react";
 import SEO from "../../../components/SEO";
 import ContactsPage from "../../../components/templates/ContactsPage/ContactsPage";
+import Breadcrumbs from "../../../components/modules/Breadcrumbs/Breadcrumbs";
 
- function Contacts() {
+function Contacts() {
+    const getDefaultTextGenerator = useCallback(() => 'Контакты', [])
+    const getTextGenerator = useCallback((param: string) => ({}[param]), [])
+
     return (
         <>
             <SEO
@@ -10,6 +15,10 @@ import ContactsPage from "../../../components/templates/ContactsPage/ContactsPag
                 keywords="недорогие диваны от производителя"
             />
             {/* <SEO {...homeConfig} />  */}
+            <Breadcrumbs
+                getDefaultTextGenerator={getDefaultTextGenerator}
+                getTextGenerator={getTextGenerator}
+            />
             <ContactsPage />
         </>
     )
